@@ -21,58 +21,67 @@
 #include <string.h>
 
 
-int main ( int file_file_loc, char *file_loc[] ) {
-  char date_input[100];
+int main (int num,char *command[]) {
+  char current[100];
   char date[11];
   char time[9];
-  char type[4]="WARN";
-  char source_input[15];
-  char trash[20];
+  char type[4];
   int listeners;
   char n[3]="now";
   FILE * input;
   FILE * output;
-  input = fopen( file_loc[1], "r");
-  output = fopen( file_loc[2], "w");
-  fscanf (input, "%s", date_input);
-  date[0]=date_input[0];
-while (fscanf (input, "%s", time) != EOF) {
-	fscanf (input, "%s", type);
-	fscanf (input, "%s", source_input);
-	
-	if(strcmp(source_input, "source/source.c")){
-		fscanf (input, "%s", trash);
-		while (trash[0] != n[0]) {
-			fscanf (input, "%s", trash);
+int i;
+double j = 0; 
+  input = fopen(command[1], "r");
+  output = fopen(command[2], "w");
+
+time[8]='\0';
+date[10]='\0';
+
+
+while (j<10000000){
+fscanf (input, "%s", current);
+
+j++;
+
+if(current[1]=='\0'){
+if(current[0]=='0'){
+break;}
+}
+
+	if(current[0]=='['){
+		for(i=0;i<10;i++){
+			date[i]=current[i+1];
+		}
+	}
+	if(current[8]==']'){
+		for(i=0;i<8;i++){
+			time[i]=current[i];
+	}}
+	if(current[2]>='A'){
+		if(current[2]<='Z'){
+			for(i=0;i<4;i++)
+				type[i]=current[i];
+		}
+	}
+	if(strcmp(current, "listener")==0){
+		fscanf (input, "%s", current);
+		while (current[0] != n[0]) {
+			fscanf (input, "%s", current);
 		}
 		fscanf (input, "%i", &listeners);
 
-		fprintf (output, "%c%c%c%c%c%c%c%c%c%c %c%c%c%c%c%c%c%c\t %d\n",date_input[1],date_input[2],date_input[3],date_input[4],date_input[5],date_input[6],date_input[7],date_input[8],date_input[9],date_input[10],time[0],time[1],time[2],time[3],time[4],time[5],time[6],time[7],listeners);
-	}
-	
-	
-	if (fscanf (input, "%s", date_input) == EOF){
-	fclose (input);
-fclose (output);
-printf ("Done!");
-return EXIT_SUCCESS;
-}
-	
-	while (date_input[0] != date[0]) {
-		if (fscanf (input, "%s", date_input) == EOF){
-	fclose (input);
-fclose (output);
-printf ("Done!");
-return EXIT_SUCCESS;
-}
-		}
+		fprintf (output, "%s\t %s\t %d\n",date,time,listeners);
 		
-	
-}
+	}
+	current[2]='\0';
+	current[8]='\0';
 
+}
+	
 fclose (input);
 fclose (output);
-printf ("Done!");
+printf ("Done!\n");
 return EXIT_SUCCESS;
 }
 
