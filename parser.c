@@ -39,13 +39,14 @@ time[8]='\0';
 date[10]='\0';
 
 
-while (j<10000000){
+while (j<100000000){
 fscanf (input, "%s", current);
 
 j++;
 
+
 if(current[1]=='\0'){
-if(current[0]=='0'){
+if(current[0]=='\0'){
 break;}
 }
 
@@ -72,11 +73,12 @@ break;}
 		fscanf (input, "%i", &listeners);
 
 		fprintf (output, "%s\t %s\t %d\n",date,time,listeners);
-		
+	
 	}
 	current[2]='\0';
 	current[8]='\0';
-
+	current[1]='\0';
+	current[0]='\0';
 }
 	
 fclose (input);
